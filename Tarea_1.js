@@ -11,9 +11,11 @@ const get_points = (shot) => {
     return check_specials(shot)? specials[shot]: shot[0] * shot[1]
 }
 
-const ingresar_jugada = (name, points, shots) => {
+const ingresar_jugada = (player, points, shots) => {
     let result = 0;
     shots.forEach(shot => result +=  get_points(shot))
+    // Podriamos guardar aca en el objeto su puntaje
+    // player.points = Math.abs(points - result)
     return Math.abs(points - result)
 }
 
