@@ -19,8 +19,6 @@ const ingresar_jugada = (player, points, shots) => {
     return Math.abs(points - result)
 }
 
-console.log(ingresar_jugada("Felipe", 501, ["DB", [3, 20], [3, 19]]))
-
 // const init_game = (name_1, name_2) => {
 //     player_1 = {
 //         "name": name_1,
