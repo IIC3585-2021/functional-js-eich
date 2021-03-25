@@ -32,5 +32,5 @@ const ingresar_jugada = (player, points, shots) => {
 //     }
 
 // const play_game = () => {
-//     console.log(`Juego inicializado con ${player_1.name} y ${player_2.name}. Ingrese lanzamiento de ${player_1}`)
+//     console.log(`Juego inicializado con ${player_1.name} y ${player_2.name}. Ingrese lanzamiento de ${player_1.name}`)
 // }
