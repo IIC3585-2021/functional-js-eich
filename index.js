@@ -21,29 +21,36 @@ const ingresar_jugada = (player, points, shots) => {
     return Math.abs(points - result)
 }
 
-const get_name_player =  player_number => reader.question(`Jugador ${player_number} cual es tu nombre? `)
+const get_name_player =  players_count => reader.question(`Jugador ${players_count} cual es tu nombre? `)
 
+const init_player = () => {
+    const name = get_name_player(players_count)
+    const number = players_count
+    const player = {
+      name, 
+      number,
+      'points': 501
+    }
+    return player
+}
 
 const init_game = () => {
-    const name_1 = get_name_player(1)
-    const name_2 = get_name_player(2)
-    player_1 = {
-        "name": name_1,
-        "points": 501
-    }
-    player_2 = {
-        "name": name_2,
-        "points": 501
+    console.log('\nBienvenidos al juego')
+    players_count = 1
+    players = []
+
+    while(reader.question('Desea agregar un jugador (1 Si; 0 No): ') == 1 ? true : false) {
+      const player = init_player()
+      players.push(player)
+      players_count += 1
     }
     return play_game
 }
 
 const play_game = () => {
-    console.log(`Juego inicializado con ${player_1.name} y ${player_2.name}. Ingrese lanzamiento de ${player_1.name}`)
 }
 
 init_game()()
-
 
 
 
