@@ -1,8 +1,22 @@
 var reader = require('readline-sync');
+var parse = require('json-parse')
 
 const specials = {
     "DB": 50,
     "SB": 25
+}
+
+const get_name_player =  players_count => reader.question(`Jugador ${players_count} cual es tu nombre? `)
+
+const init_player = () => {
+    const name = get_name_player(players_count)
+    const number = players_count
+    const player = {
+      name, 
+      number,
+      'points': 501
+    }
+    return player
 }
 
 const check_specials = (shot) => {
@@ -13,37 +27,43 @@ const get_points = (shot) => {
     return check_specials(shot)? specials[shot]: shot[0] * shot[1]
 }
 
-const ingresar_jugada = (player, points, shots) => {
+const insert_play = (player, shots) => {
     let result = 0;
-    shots.forEach(shot => result +=  get_points(shot))
-    // Podriamos guardar aca en el objeto su puntaje
-    // player.points = Math.abs(points - result)
-    return Math.abs(points - result)
+    let shots_array = parse([], shots)
+    shots_array.forEach(shot => result +=  get_points(shot))
+    player.points = Math.abs(player.points - result)
+    return player.points === 0
 }
-
-const get_name_player =  player_number => reader.question(`Jugador ${player_number} cual es tu nombre? `)
-
-
 const init_game = () => {
-    const name_1 = get_name_player(1)
-    const name_2 = get_name_player(2)
-    player_1 = {
-        "name": name_1,
-        "points": 501
-    }
-    player_2 = {
-        "name": name_2,
-        "points": 501
+    console.log('Bienvenidos al juego\n')
+    players_count = 1
+    players = []
+
+    while(reader.question('Desea agregar un jugador (1 Si; 0 No): ') == 1 ? true : false) {
+      const player = init_player()
+      players.push(player)
+      players_count += 1
     }
     return play_game
 }
 
+const get_play = name => reader.question(`Jugador ${name} es tu turno. Ingresa tu jugada`)
+
 const play_game = () => {
-    console.log(`Juego inicializado con ${player_1.name} y ${player_2.name}. Ingrese lanzamiento de ${player_1.name}`)
+    let winner_found = false
+    let winner;
+    while (!winner_found){
+        players.forEach((player) => {
+            const shots = get_play(player.name)
+            let veamos = insert_play(player, shots)
+            winner_found = veamos == true ? true : false
+            winner = winner_found == true ? player : null
+        })
+    }
+    return console.log(`Felicidades ${winner.name} haz ganado esta partida`)
 }
 
 init_game()()
-
 
 
 
