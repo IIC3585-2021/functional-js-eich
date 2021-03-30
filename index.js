@@ -1,5 +1,6 @@
 var reader = require('readline-sync');
-var parse = require('json-parse')
+var parse = require('json-parse');
+var compose = require('lodash/fp/compose');
 
 const specials = {
     "DB": 50,
@@ -33,26 +34,21 @@ const insert_play = (player, shots) => {
 const init_game = () => {
     console.log('Bienvenidos al juego\n')
     players = []
-
     while(reader.question('Desea agregar un jugador (1 Si; 0 No): ') == 1 ? true : false) {
-      const player = init_player()
-      players.push(player)
+        compose((player) => players.push(player),init_player)()
     }
     return play_game
 }
 
 const play_game = () => {
-    let winner_found = false
-    let winner;
+    let winner_found = null
     while (!winner_found){
         players.forEach((player) => {
-            const shots = get_play(player.name)
-            let veamos = insert_play(player, shots)
-            winner_found = veamos == true ? true : false
-            winner = winner_found == true ? player : null
+            const insert_play_of_player = insert_play.bind(console, player)
+            winner_found = compose((shots) => insert_play_of_player(shots), get_play)(player.name) == true ? player : false
         })
     }
-    return console.log(`Felicidades ${winner.name} haz ganado esta partida`)
+    return console.log(`Felicidades ${winner_found.name} haz ganado esta partida`)
 }
 
 init_game()()
