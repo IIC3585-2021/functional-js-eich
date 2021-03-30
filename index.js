@@ -1,7 +1,6 @@
 var reader = require('readline-sync');
 var parse = require('json-parse');
 var compose = require('lodash/fp/compose');
-var pipe = require('lodash/fp/pipe')
 
 const specials = {
     "DB": 50,
@@ -10,9 +9,9 @@ const specials = {
 
 const get_name_player =  () => reader.question(`Cual es el nombre del jugador? `);
 
-const check_specials = (shot) => shot in specials? true : false;
+const check_specials = shot => shot in specials? true : false;
     
-const get_points = (shot) => check_specials(shot)? specials[shot]: shot[0] * shot[1];
+const get_points = shot => check_specials(shot)? specials[shot]: shot[0] * shot[1];
 
 const get_play = name => reader.question(`Jugador ${name} es tu turno. Ingresa tu jugada`);
 
@@ -40,9 +39,6 @@ const init_game = () => {
     new_players()
     return play_game
 }
-
-
-
 const play_game = () => {
     let winner_found = null
     while (!winner_found){
