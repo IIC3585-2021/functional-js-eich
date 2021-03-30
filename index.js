@@ -24,13 +24,16 @@ const init_player = () => {
     return player
 }
 
-const insert_play = (player, shots) => {
+const insert_play = (player) => {
     let result = 0;
     const parsed = parse.bind(console, []);
-    compose((shots_array) => shots_array.forEach(shot => result +=  get_points(shot)), parsed)(shots)
-    player.points = Math.abs(player.points - result)
-    console.log(`Ahora tienes ${player.points} puntos`)
-    return player.points === 0
+    const compute_values = (shots) => {
+        compose((shots_array) => shots_array.forEach(shot => result +=  get_points(shot)), parsed)(shots)
+        player.points = Math.abs(player.points - result)
+        console.log(`Ahora tienes ${player.points} puntos`)
+        return player.points === 0
+    }
+    return compute_values
 }
 const init_game = () => {
     console.log('Bienvenidos al juego\n')
@@ -43,7 +46,7 @@ const play_game = () => {
     let winner_found = null
     const is_there_winner = () => {
         players.forEach((player) => {
-            const insert_play_of_player = insert_play.bind(console, player)
+            const insert_play_of_player = insert_play(player)
             winner_found = compose((shots) => insert_play_of_player(shots), get_play)(player.name) == true ? player : winner_found
         })
         return winner_found ? true : false
