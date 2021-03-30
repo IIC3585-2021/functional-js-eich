@@ -1,7 +1,7 @@
 # IIC3585 - Grupo EICH
-##Inciar programa
+## Iniciar programa
 Correr ``node index.js``
-##Formato jugadas
+## Formato jugadas
 Para ingresar una jugada, deber estar en el siguiente formato:
 `[tiro1, tiro2, tiro3]`.
 Donde el tiro puede ser: 
@@ -12,13 +12,13 @@ Donde el tiro puede ser:
 
 Donde `int1` puede ser  {1, 2, 3} y `int2` puede ser {1, 2, 3 ... 20}
 
-####Ejemplos:
+#### Ejemplos:
 - ["SB", [3, 20], "DB"]
 - ["DB", [2, 20], [3, 19]]
 
 
 Importante utilizar doble comilla para "SB" y "DB"
-##Integrantes:
+## Integrantes:
 
 - Lucas Rodriguez
 
