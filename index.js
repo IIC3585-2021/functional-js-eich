@@ -1,6 +1,7 @@
 var reader = require('readline-sync');
 var parse = require('json-parse');
 var compose = require('lodash/fp/compose');
+var pipe = require('lodash/fp/pipe')
 
 const specials = {
     "DB": 50,
@@ -26,8 +27,8 @@ const init_player = () => {
 
 const insert_play = (player, shots) => {
     let result = 0;
-    let shots_array = parse([], shots)
-    shots_array.forEach(shot => result +=  get_points(shot))
+    const parsed = parse.bind(console, []);
+    compose((shots_array) => shots_array.forEach(shot => result +=  get_points(shot)), parsed)(shots)
     player.points = Math.abs(player.points - result)
     return player.points === 0
 }
