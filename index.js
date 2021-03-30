@@ -34,11 +34,13 @@ const insert_play = (player, shots) => {
 const init_game = () => {
     console.log('Bienvenidos al juego\n')
     players = []
-    while(reader.question('Desea agregar un jugador (1 Si; 0 No): ') == 1 ? true : false) {
-        compose((player) => players.push(player),init_player)()
-    }
+    const new_player = () => reader.question('Desea agregar un jugador (1 Si; 0 No): ') === "1"
+    const new_players = () => new_player() ?  (compose((player) => players.push(player),init_player)(), new_players()): undefined
+    new_players()
     return play_game
 }
+
+
 
 const play_game = () => {
     let winner_found = null
