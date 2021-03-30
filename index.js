@@ -6,25 +6,21 @@ const specials = {
     "SB": 25
 }
 
-const get_name_player =  players_count => reader.question(`Jugador ${players_count} cual es tu nombre? `)
+const get_name_player =  () => reader.question(`Cual es el nombre del jugador? `);
+
+const check_specials = (shot) => shot in specials? true : false;
+    
+const get_points = (shot) => check_specials(shot)? specials[shot]: shot[0] * shot[1];
+
+const get_play = name => reader.question(`Jugador ${name} es tu turno. Ingresa tu jugada`);
 
 const init_player = () => {
-    const name = get_name_player(players_count)
-    const number = players_count
+    const name = get_name_player()
     const player = {
       name, 
-      number,
       'points': 501
     }
     return player
-}
-
-const check_specials = (shot) => {
-    return shot in specials? true : false
-}
-    
-const get_points = (shot) => {
-    return check_specials(shot)? specials[shot]: shot[0] * shot[1]
 }
 
 const insert_play = (player, shots) => {
@@ -36,18 +32,14 @@ const insert_play = (player, shots) => {
 }
 const init_game = () => {
     console.log('Bienvenidos al juego\n')
-    players_count = 1
     players = []
 
     while(reader.question('Desea agregar un jugador (1 Si; 0 No): ') == 1 ? true : false) {
       const player = init_player()
       players.push(player)
-      players_count += 1
     }
     return play_game
 }
-
-const get_play = name => reader.question(`Jugador ${name} es tu turno. Ingresa tu jugada`)
 
 const play_game = () => {
     let winner_found = false
