@@ -42,13 +42,11 @@ const init_game = () => {
 const play_game = () => {
     let winner_found = null
     const is_there_winner = () => {
-        let we_have_winner = false
         players.forEach((player) => {
             const insert_play_of_player = insert_play.bind(console, player)
             winner_found = compose((shots) => insert_play_of_player(shots), get_play)(player.name) == true ? player : winner_found
         })
         return winner_found ? true : false
-
     }
     const find_winner = () => !is_there_winner() ? find_winner() : undefined
     find_winner()
