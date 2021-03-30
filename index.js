@@ -9,9 +9,9 @@ const specials = {
 
 const get_name_player =  () => reader.question(`Cual es el nombre del jugador? `);
 
-const check_specials = (shot) => shot in specials? true : false;
+const check_specials = shot => shot in specials? true : false;
     
-const get_points = (shot) => check_specials(shot)? specials[shot]: shot[0] * shot[1];
+const get_points = shot => check_specials(shot)? specials[shot]: shot[0] * shot[1];
 
 const get_play = name => reader.question(`Jugador ${name} es tu turno. Ingresa tu jugada `);
 
@@ -26,9 +26,8 @@ const init_player = () => {
 
 const insert_play = (player, shots) => {
     let result = 0;
-    let shots_array = parse([], shots)
-    console.log(shots_array)
-    shots_array.forEach(shot => result +=  get_points(shot))
+    const parsed = parse.bind(console, []);
+    compose((shots_array) => shots_array.forEach(shot => result +=  get_points(shot)), parsed)(shots)
     player.points = Math.abs(player.points - result)
     console.log(`Ahora tienes ${player.points} puntos`)
     return player.points === 0
@@ -40,9 +39,6 @@ const init_game = () => {
     const new_players = () => new_player() ?  (compose((player) => players.push(player),init_player)(), new_players()): play_game
     return new_players
 }
-
-
-
 const play_game = () => {
     let winner_found = null
     const is_there_winner = () => {
