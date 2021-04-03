@@ -1,6 +1,6 @@
 /* PROGRAMACION FUNCIONAL 
 
-Observación: Todas las funciones estan definidas como de primera clase
+Observación: La mayoría de las funciones estan definidas como de primera clase
 
 */
 
