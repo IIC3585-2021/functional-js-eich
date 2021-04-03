@@ -58,7 +58,7 @@ const init_game = () => {
     const players = []
     const new_player = () => reader.question('Desea agregar un jugador (1 Si; 0 No): ') === "1"
     // Funcion Compose y Recursividad para agregar jugadores
-    const new_players = () => new_player() ?  (compose((player) => players.push(player),init_player)(), new_players()): play_game(players)
+    const new_players = () => new_player() ?  (compose((player) => players.push(player),init_player)(), new_players()): () => play_game(players)
     return new_players
 }
 
@@ -85,4 +85,4 @@ const play_game = (players) => {
     console.log("No habían jugadores para esta partida")
 }
 
-init_game()()
+init_game()()()
