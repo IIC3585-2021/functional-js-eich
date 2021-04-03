@@ -78,7 +78,7 @@ const play_game = (players) => {
 
     // Recursividad para ejecución juego. Retorna mensaje cuando gana jugador.
     const find_winner = () => !is_there_winner() ? find_winner() : undefined;
-    if (players.length ==! 0) {
+    if (players.length !== 0) {
         find_winner()
         return console.log(`Felicidades ${winner_found.name} haz ganado esta partida`)
     }
