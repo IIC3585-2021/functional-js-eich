@@ -5,10 +5,9 @@ Observación: La mayoría de las funciones estan definidas como de primera clase
 */
 
 //Importamos librerias
-var reader = require('readline-sync');
-var parse = require('json-parse');
-var compose = require('lodash/fp/compose');
-const { find } = require('lodash');
+const reader = require('readline-sync');
+const parse = require('json-parse');
+const compose = require('lodash/fp/compose');
 
 // Tiros especiales
 const specials = {
@@ -56,15 +55,15 @@ const insert_play = (player) => {
 // Da bienvenida al juego y se agregan jugadores. Una vez finalizada se ejecuta función play_game
 const init_game = () => {
     console.log('Bienvenidos al juego\n')
-    players = []
+    const players = []
     const new_player = () => reader.question('Desea agregar un jugador (1 Si; 0 No): ') === "1"
     // Funcion Compose y Recursividad para agregar jugadores
-    const new_players = () => new_player() ?  (compose((player) => players.push(player),init_player)(), new_players()): play_game
+    const new_players = () => new_player() ?  (compose((player) => players.push(player),init_player)(), new_players()): () => play_game(players)
     return new_players
 }
 
 // Simula una jugada para cada jugador. Retorna si existe ganador o no.
-const play_game = () => {
+const play_game = (players) => {
     let winner_found = null
     const is_there_winner = () => {
         // Funcion de orden superior forEach
@@ -79,7 +78,7 @@ const play_game = () => {
 
     // Recursividad para ejecución juego. Retorna mensaje cuando gana jugador.
     const find_winner = () => !is_there_winner() ? find_winner() : undefined;
-    if (!players) {
+    if (players.length ==! 0) {
         find_winner()
         return console.log(`Felicidades ${winner_found.name} haz ganado esta partida`)
     }
