@@ -8,6 +8,7 @@ Observación: Todas las funciones estan definidas como de primera clase
 var reader = require('readline-sync');
 var parse = require('json-parse');
 var compose = require('lodash/fp/compose');
+const { find } = require('lodash');
 
 // Tiros especiales
 const specials = {
@@ -77,9 +78,12 @@ const play_game = () => {
     }
 
     // Recursividad para ejecución juego. Retorna mensaje cuando gana jugador.
-    const find_winner = () => !is_there_winner() ? find_winner() : undefined
-    find_winner()
-    return console.log(`Felicidades ${winner_found.name} haz ganado esta partida`)
+    const find_winner = () => !is_there_winner() ? find_winner() : undefined;
+    if (!players) {
+        find_winner()
+        return console.log(`Felicidades ${winner_found.name} haz ganado esta partida`)
+    }
+    console.log("No habían jugadores para esta partida")
 }
 
 init_game()()()
